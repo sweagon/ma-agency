@@ -1,29 +1,21 @@
-import express from 'express';
+// api/contact.js
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-import cors from 'cors';
 
-dotenv.config();
+export default async function handler(req, res) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-const port = process.env.PORT || 3001;
-
-// POST /api/contact
-app.post('/api/contact', async (req, res) => {
     const { name, email, company, message } = req.body;
 
     if (!name || !email || !message) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Create transporter
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+        secure: process.env.SMTP_SECURE === 'true',
         auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
@@ -31,9 +23,8 @@ app.post('/api/contact', async (req, res) => {
     });
 
     try {
-        // Send email
         await transporter.sendMail({
-            from: `"${name}" <${process.env.SMTP_USER}>`, // Recommended to send from your own authenticated email
+            from: `"${name}" <${process.env.SMTP_USER}>`,
             replyTo: email,
             to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
             subject: `New Contact Form Submission from ${name}`,
@@ -54,8 +45,4 @@ app.post('/api/contact', async (req, res) => {
         console.error('Error sending email:', error);
         res.status(500).json({ error: 'Failed to send email' });
     }
-});
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+}
