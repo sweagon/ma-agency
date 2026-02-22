@@ -58,6 +58,53 @@ export default function App() {
                 </button>
             </nav>
 
+            {/* Mobile menu panel - add this after your navigation */}
+            {isMenuOpen && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="fixed inset-x-0 top-20 z-40 md:hidden"
+                >
+                    <div className="bg-[#111111]/50 bg-clip-padding backdrop-filter backdrop-blur-sm border-t border-white/10 p-6 shadow-2xl rounded-b-xl">
+                        <div className="flex flex-col space-y-4">
+                            <a
+                                href="#projects"
+                                className="text-lg font-medium py-2 hover:text-red-500 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Projects
+                            </a>
+                            <a
+                                href="#services"
+                                className="text-lg font-medium py-2 hover:text-red-500 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Services
+                            </a>
+                            <a
+                                href="#contact"
+                                className="text-lg font-medium py-2 hover:text-red-500 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Contact
+                            </a>
+                            <div className="pt-4 border-t border-white/10">
+                                <a
+                                    href="https://wa.me/447311124096?text=Hey%20MA%20Agency%21%20I%20just%20checked%20out%20your%20site%20and%20I%27m%20loving%20the%20vibe.%20Would%20love%20to%20chat%20about%20how%20we%20could%20work%20together%20%E2%9C%A8"
+                                    target="_blank"
+                                    className="text-green-400 text-sm flex items-center gap-2"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <span>WhatsApp:</span>
+                                    <span>+44 7311 124096</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
             {/* Hero Section - Exact Globe Hero Example with Brand Colors */}
             <section className="relative min-h-screen">
                 {/* Celestial Orrery Background - Exact as its example */}
