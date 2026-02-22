@@ -9,6 +9,7 @@ import { useState } from "react";
 import { MorphingText } from "@/components/liquid-text";
 // Add this import at the top with your other imports
 import { CircularRevealHeading } from "@/components/circular-reveal-heading";
+import { BasicToast, showSuccessToast, showErrorToast } from "@/components/basic-toast";
 
 // Add this items array before your App component or inside it
 const serviceItems = [
@@ -37,6 +38,7 @@ export default function App() {
 
     return (
         <div className="min-h-screen bg-[#111111] text-white selection:bg-red-600 selection:text-white font-sans overflow-x-hidden">
+            <BasicToast />
             <CustomCursor />
 
             {/* Navigation */}
@@ -587,14 +589,6 @@ function ContactForm() {
         e.preventDefault();
         setStatus("submitting");
 
-        const formData = new FormData(e.currentTarget);
-        const data = {
-            name: (e.currentTarget.name as unknown as HTMLInputElement).value, // Wait, I need to be careful with how I access values if I didn't add 'name' attributes
-            email: (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value,
-            // Actually, let's just use the IDs since they are there
-        };
-
-        // Better way:
         const form = e.currentTarget;
         const payload = {
             name: (form.querySelector('#name') as HTMLInputElement).value,
@@ -613,17 +607,31 @@ function ContactForm() {
             });
 
             if (response.ok) {
-                setStatus("success");
+                // Success toast
+                showSuccessToast(
+                    "Message Sent! 🎉",
+                    "Thank you for reaching out. We'll get back to you within 24 hours."
+                );
                 form.reset();
-                setTimeout(() => setStatus("idle"), 5000);
+                setStatus("success");
+                // revert to idle after a short delay so the success state is visible
+                setTimeout(() => setStatus("idle"), 3000);
             } else {
                 const errData = await response.json();
-                alert(errData.error || 'Failed to send message');
+                // Error toast
+                showErrorToast(
+                    "Something went wrong",
+                    errData.error || 'Failed to send message. Please try again.'
+                );
                 setStatus("idle");
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            // Error toast
+            showErrorToast(
+                "Connection Error",
+                "Unable to send your message. Please check your internet connection and try again."
+            );
             setStatus("idle");
         }
     };
@@ -692,16 +700,6 @@ function ContactForm() {
                     <>Send Message <ArrowRight className="w-5 h-5" /></>
                 )}
             </button>
-
-            {status === "success" && (
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-green-500 text-sm mt-4"
-                >
-                    Thank you! We'll be in touch shortly.
-                </motion.p>
-            )}
         </form>
     );
 }
