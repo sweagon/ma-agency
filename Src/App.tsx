@@ -1,15 +1,15 @@
 import { TextScramble } from "./components/TextScramble";
 import { LinkPreview } from "./components/LinkPreview";
 import { CustomCursor } from "./components/CustomCursor";
-import { DotGlobeHero } from "@/components/globe-hero";
-import { Component as CelestialOrrery } from "@/components/celestial-orrery";
+import { DotGlobeHero } from "./components/globe-hero";
+import { Component as CelestialOrrery } from "./components/celestial-orrery";
 import { motion } from "framer-motion";
 import { ArrowRight, Menu, Zap } from "lucide-react";
 import { useState } from "react";
-import { MorphingText } from "@/components/liquid-text";
+import { MorphingText } from "./components/liquid-text";
 // Add this import at the top with your other imports
-import { CircularRevealHeading } from "@/components/circular-reveal-heading";
-import { BasicToast, showSuccessToast, showErrorToast } from "@/components/basic-toast";
+import { CircularRevealHeading } from "./components/circular-reveal-heading";
+import { BasicToast, showSuccessToast, showErrorToast } from "./components/basic-toast";
 
 // Add this items array before your App component or inside it
 const serviceItems = [
@@ -47,6 +47,8 @@ export default function App() {
                     MA Agency<span className="text-red-600">.</span>
                 </a>
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest">
+                    <a href="https://wa.me/447311124096?text=Hey%20MA%20Agency%21%20I%20just%20checked%20out%20your%20site%20and%20I%27m%20loving%20the%20vibe.%20Would%20love%20to%20chat%20about%20how%20we%20could%20work%20together%20%E2%9C%A8"
+                        target="_blank" className="text-green-400">+44 7311 124096</a>
                     <LinkPreview url="#projects" title="Our Work" description="Explore our latest digital experiences and brand transformations.">Projects</LinkPreview>
                     <LinkPreview url="#services" title="What We Do" description="Discover the core services we offer to elevate your brand.">Services</LinkPreview>
                     <LinkPreview url="#contact" title="Get in Touch" description="Ready to start a project? Let's talk.">Contact</LinkPreview>
@@ -132,12 +134,11 @@ export default function App() {
                                 className="max-w-3xl mx-auto space-y-4"
                             >
                                 <p className="text-xl md:text-2xl text-white/70 leading-relaxed font-medium">
-                                    A modern marketing agency crafting thoughtful brands and{" "}
+                                    A London-born agency crafting thoughtful brands and{" "}
                                     <TextScramble text="digital experiences" className="text-white font-semibold bg-gradient-to-r from-red-600/30 to-red-600/10 px-3 py-1 rounded-full" />
-
                                 </p>
                                 <p className="text-lg text-white/50 leading-relaxed">
-                                    We build <TextScramble text="legacies" className="text-white font-semibold" /> through strategy, content, and innovation.
+                                    We build <TextScramble text="global legacies" className="text-white font-semibold" /> from our studio in London.
                                 </p>
                             </motion.div>
                         </motion.div>
@@ -212,7 +213,7 @@ export default function App() {
                             <img src="/1.webp" alt="Project 1" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Aura Tech</h3>
+                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Next Wave</h3>
                         <p className="text-gray-400">Brand Identity & Digital Platform</p>
                     </motion.div>
 
@@ -228,7 +229,7 @@ export default function App() {
                             <img src="2.webp" alt="Project 2" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Lumina</h3>
+                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">island - Go Cappadocia</h3>
                         <p className="text-gray-400">E-Commerce Experience</p>
                     </motion.div>
 
@@ -244,7 +245,7 @@ export default function App() {
                             <img src="/4.webp" alt="Project 3" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Nexus</h3>
+                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">MoonTrue</h3>
                         <p className="text-gray-400">Web3 Application Design</p>
                     </motion.div>
 
@@ -260,7 +261,7 @@ export default function App() {
                             <img src="/3.webp" alt="Project 4" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
-                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Vanguard</h3>
+                        <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Let's Renoria</h3>
                         <p className="text-gray-400">Global Marketing Campaign</p>
                     </motion.div>
                 </div>
@@ -500,9 +501,9 @@ export default function App() {
                             Ready to take your brand to the next level? Fill out the form and we'll get back to you within 24 hours.
                         </p>
                         <div className="space-y-4 text-sm uppercase tracking-widest text-gray-500">
-                            <p>hello@ma.agency</p>
-                            <p>+1 (555) 123-4567</p>
-                            <p>New York, NY</p>
+                            <p>ma.webagency@outlook.com</p>
+                            <p>+44 7311 124096</p>
+                            <p>London, UK</p>
                         </div>
                     </div>
 
@@ -553,8 +554,8 @@ export default function App() {
                                 Would love to hear about your company and how I can help.
                             </p>
                             <p className="text-xs text-gray-500 mb-2 uppercase tracking-widest">Reply within 24h — Say Hello</p>
-                            <a href="mailto:hello@ma.agency" className="text-lg font-bold hover:text-red-500 transition-colors underline underline-offset-4">
-                                hello@ma.agency
+                            <a href="mailto:ma.webagency@outlook.com" className="text-lg font-bold hover:text-red-500 transition-colors underline underline-offset-4">
+                                ma.webagency@outlook.com
                             </a>
                         </div>
                     </div>
