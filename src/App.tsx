@@ -207,7 +207,7 @@ export default function App() {
                         className="group cursor-pointer"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="https://picsum.photos/seed/project1/800/600" alt="Project 1" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/1.webp" alt="Project 1" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Aura Tech</h3>
@@ -223,7 +223,7 @@ export default function App() {
                         className="group cursor-pointer md:mt-24"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="https://picsum.photos/seed/project2/800/600" alt="Project 2" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="2.webp" alt="Project 2" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Lumina</h3>
@@ -239,7 +239,7 @@ export default function App() {
                         className="group cursor-pointer"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="https://picsum.photos/seed/project3/800/600" alt="Project 3" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/4.webp" alt="Project 3" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Nexus</h3>
@@ -255,7 +255,7 @@ export default function App() {
                         className="group cursor-pointer md:mt-24"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="https://picsum.photos/seed/project4/800/600" alt="Project 4" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/3.webp" alt="Project 4" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Vanguard</h3>
