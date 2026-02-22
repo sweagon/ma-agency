@@ -1,5 +1,8 @@
 // api/contact.js
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+// Initialize Resend with your API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
     // Enable CORS
@@ -7,93 +10,112 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    // Handle preflight
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
 
+    // Only allow POST
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { name, email, company, message } = req.body;
-
-    if (!name || !email || !message) {
-        return res.status(400).json({ error: 'Missing required fields' });
-    }
-
-    // Log environment variables (without showing full password)
-    console.log('SMTP Config Check:', {
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        user: process.env.SMTP_USER,
-        hasPassword: !!process.env.SMTP_PASS,
-        contactEmail: process.env.CONTACT_EMAIL
-    });
-
-    // Create transporter with debug enabled
-    const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_SECURE === 'true',
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-        },
-        debug: true, // Enable debug logs
-        logger: true, // Log to console
-        tls: {
-            rejectUnauthorized: false // Only for testing
-        }
-    });
-
     try {
-        // Verify connection first
-        console.log('Verifying SMTP connection...');
-        await transporter.verify();
-        console.log('SMTP connection verified successfully');
+        const { name, email, company, message } = req.body;
 
-        // Send email
-        console.log('Attempting to send email...');
-        const info = await transporter.sendMail({
-            from: `"MA Agency Website" <${process.env.SMTP_USER}>`,
-            to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
-            replyTo: email,
-            subject: `New Contact Form Submission from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\nCompany: ${company || 'N/A'}\n\nMessage:\n${message}`,
+        // Validate
+        if (!name || !email || !message) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        console.log('Sending email via Resend...');
+
+        // Send email via Resend
+        const { data, error } = await resend.emails.send({
+            from: 'MA Agency <onboarding@resend.dev>', // Use your domain later
+            to: ['ma.webagency@outlook.com'], // Your email
+            subject: `New message from ${name}`,
             html: `
-                <h3>New Contact Form Submission</h3>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Company:</strong> ${company || 'N/A'}</p>
-                <br/>
-                <p><strong>Message:</strong></p>
-                <p>${message.replace(/\n/g, '<br/>')}</p>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        h3 { color: #ef4444; }
+                        .field { margin-bottom: 15px; }
+                        .label { font-weight: bold; color: #333; }
+                        .value { color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h3>✨ New Contact Form Submission</h3>
+                        
+                        <div class="field">
+                            <div class="label">Name:</div>
+                            <div class="value">${name}</div>
+                        </div>
+                        
+                        <div class="field">
+                            <div class="label">Email:</div>
+                            <div class="value">${email}</div>
+                        </div>
+                        
+                        ${company ? `
+                        <div class="field">
+                            <div class="label">Company:</div>
+                            <div class="value">${company}</div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="field">
+                            <div class="label">Message:</div>
+                            <div class="value">${message.replace(/\n/g, '<br/>')}</div>
+                        </div>
+                        
+                        <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;" />
+                        
+                        <p style="color: #999; font-size: 12px;">
+                            Sent from MA Agency website contact form
+                        </p>
+                    </div>
+                </body>
+                </html>
+            `,
+            replyTo: email,
+            text: `
+New Contact Form Submission
+
+Name: ${name}
+Email: ${email}
+${company ? `Company: ${company}\n` : ''}
+Message:
+${message}
             `,
         });
 
-        console.log('Email sent successfully:', info);
-        console.log('Message ID:', info.messageId);
-        console.log('Accepted:', info.accepted);
-        console.log('Response:', info.response);
+        if (error) {
+            console.error('Resend error:', error);
+            throw error;
+        }
 
-        res.status(200).json({
+        console.log('Email sent successfully:', data);
+
+        return res.status(200).json({
             success: true,
-            messageId: info.messageId
+            message: 'Email sent successfully'
         });
 
     } catch (error) {
-        console.error('SMTP Error Details:');
-        console.error('Code:', error.code);
-        console.error('Command:', error.command);
-        console.error('Response:', error.response);
-        console.error('ResponseCode:', error.responseCode);
-        console.error('Message:', error.message);
-        console.error('Stack:', error.stack);
+        console.error('Detailed error:', {
+            message: error.message,
+            stack: error.stack
+        });
 
-        res.status(500).json({
+        return res.status(500).json({
             error: 'Failed to send email',
-            details: error.message,
-            code: error.code
+            details: error.message
         });
     }
 }
