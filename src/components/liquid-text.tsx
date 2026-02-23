@@ -1,34 +1,26 @@
-// src/components/liquid-text.tsx
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-
-interface MorphingTextProps {
-  className?: string;
-  texts: string[];
-  duration?: number;
-}
 
 const useMorphingText = (texts: string[], duration: number) => {
   const textIndexRef = useRef(0);
   const morphRef = useRef(0);
   const cooldownRef = useRef(0);
   const timeRef = useRef(new Date());
-  const animationFrameRef = useRef<number>(0);
 
   const text1Ref = useRef<HTMLSpanElement>(null);
   const text2Ref = useRef<HTMLSpanElement>(null);
 
-  const morphTime = (duration / 1000) * 0.75;
-  const cooldownTime = (duration / 1000) * 0.25;
+  // Divide the total duration into morph and cooldown phases
+  const morphTime = (duration / 1000) * 0.75; // 75% of time morphing
+  const cooldownTime = (duration / 1000) * 0.25; // 25% cooldown
 
-  const setStyles = useCallback((fraction: number) => {
-    const [current1, current2] = [text1Ref.current, text2Ref.current];
-    if (!current1 || !current2 || !texts || texts.length === 0) return;
+  const setStyles = useCallback(
+    (fraction: number) => {
+      const [current1, current2] = [text1Ref.current, text2Ref.current];
+      if (!current1 || !current2 || !texts || texts.length === 0) return;
 
-    // Batch DOM updates
-    requestAnimationFrame(() => {
       current2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
       current2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
 
@@ -38,21 +30,29 @@ const useMorphingText = (texts: string[], duration: number) => {
 
       current1.textContent = texts[textIndexRef.current % texts.length];
       current2.textContent = texts[(textIndexRef.current + 1) % texts.length];
-    });
-  }, [texts]);
+
+      current1.style.color = 'inherit';
+      current2.style.color = 'inherit';
+    },
+    [texts],
+  );
 
   const doMorph = useCallback(() => {
     morphRef.current -= cooldownRef.current;
     cooldownRef.current = 0;
 
     let fraction = morphRef.current / morphTime;
+
     if (fraction > 1) {
       cooldownRef.current = cooldownTime;
       fraction = 1;
     }
 
     setStyles(fraction);
-    if (fraction === 1) textIndexRef.current++;
+
+    if (fraction === 1) {
+      textIndexRef.current++;
+    }
   }, [setStyles, morphTime, cooldownTime]);
 
   const doCooldown = useCallback(() => {
@@ -67,8 +67,10 @@ const useMorphingText = (texts: string[], duration: number) => {
   }, []);
 
   useEffect(() => {
+    let animationFrameId: number;
+
     const animate = () => {
-      animationFrameRef.current = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
 
       const newTime = new Date();
       const dt = (newTime.getTime() - timeRef.current.getTime()) / 1000;
@@ -80,16 +82,20 @@ const useMorphingText = (texts: string[], duration: number) => {
       else doCooldown();
     };
 
-    animationFrameRef.current = requestAnimationFrame(animate);
+    animate();
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      cancelAnimationFrame(animationFrameId);
     };
   }, [doMorph, doCooldown]);
 
   return { text1Ref, text2Ref };
 };
+
+interface MorphingTextProps {
+  className?: string;
+  texts: string[];
+  duration?: number;
+}
 
 const Texts: React.FC<Pick<MorphingTextProps, "texts" | "duration">> = ({ texts, duration = 3000 }) => {
   const { text1Ref, text2Ref } = useMorphingText(texts, duration);
@@ -114,7 +120,10 @@ const SvgFilters: React.FC = () => (
         <feColorMatrix
           in="SourceGraphic"
           type="matrix"
-          values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 255 -140"
         />
       </filter>
     </defs>
@@ -127,6 +136,7 @@ const MorphingText: React.FC<MorphingTextProps> = ({ texts, className, duration 
       "block relative w-full font-sans font-bold leading-none [filter:url(#threshold)_blur(0.6px)]",
       className,
     )}
+    style={{ "--morph-duration": `${duration}ms` } as React.CSSProperties}
   >
     <Texts texts={texts} duration={duration} />
     <SvgFilters />
