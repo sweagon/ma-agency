@@ -145,6 +145,9 @@ export default function App() {
 
                             {/* Headline - with working MorphingText */}
                             <div className="space-y-6">
+                                <h1 className="sr-only">
+                                    MA Agency | London-Based Digital Marketing Agency | Design, Development, Marketing
+                                </h1>
                                 <motion.h1
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -157,9 +160,6 @@ export default function App() {
 
                                     {/* Morphing text container */}
                                     <span className="block relative min-h-[1em] items-center justify-center">
-                                        {/* Main morphing text with gradient */}
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-br from-red-500 via-red-600 to-red-500 text-[clamp(3rem,15vw,8rem)] font-black">
-                                        </span>
                                         <MorphingText texts={["Innovate", "Scale", "Dominate"]} />
 
                                         {/* Underline */}
@@ -257,7 +257,7 @@ export default function App() {
                         className="group cursor-pointer"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="/1.webp" alt="Project 1" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/1.webp" alt="Next Wave brand identity and digital platform project by MA Agency" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Next Wave</h3>
@@ -273,7 +273,7 @@ export default function App() {
                         className="group cursor-pointer md:mt-24"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="2.webp" alt="Project 2" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="2.webp" alt="island - Go Cappadocia e-commerce experience design" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">island - Go Cappadocia</h3>
@@ -289,7 +289,7 @@ export default function App() {
                         className="group cursor-pointer"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="/4.webp" alt="Project 3" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/4.webp" alt="MoonTrue web3 application design project" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">MoonTrue</h3>
@@ -305,7 +305,7 @@ export default function App() {
                         className="group cursor-pointer md:mt-24"
                     >
                         <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900 mb-6 rounded-lg">
-                            <img src="/3.webp" alt="Project 4" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <img src="/3.webp" alt="Let's Renoria global marketing campaign by MA Agency" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                         </div>
                         <h3 className="text-2xl font-bold mb-2 group-hover:text-red-500 transition-colors">Let's Renoria</h3>
