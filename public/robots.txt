@@ -4,4 +4,4 @@ Allow: /#projects
 Allow: /#services
 Allow: /#contact
 
-Sitemap: https://ma-webagency.vercel.app/sitemap.xml
+Sitemap: https://ma-agency-london.vercel.app/sitemap.xml
