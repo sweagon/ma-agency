@@ -150,6 +150,7 @@ export default function App() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 1, delay: 0.3 }}
                                     className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.85] select-none"
+
                                 >
                                     <span className="block font-light text-white/60 mb-3 text-4xl md:text-6xl lg:text-7xl">
                                         We help
@@ -166,6 +167,9 @@ export default function App() {
                                             transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
                                             className="absolute -bottom-6 left-0 h-1 bg-gradient-to-r from-red-500 via-red-600 to-transparent rounded-full shadow-lg shadow-red-600/50"
                                         />
+                                    </span>
+                                    <span className="sr-only">
+                                        We help businesses innovate, scale and dominate in the digital market.
                                     </span>
                                 </motion.h1>
                             </div>
