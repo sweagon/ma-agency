@@ -125,9 +125,9 @@ html {
     --primary: oklch(0.922 0 0);
     --primary-foreground: oklch(0.205 0 0);
     --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
+    --secondary-foreground: oklch(0.95 0 0);
     --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
+    --muted-foreground: oklch(0.8 0 0);
     --accent: oklch(0.269 0 0);
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.704 0.191 22.216);
@@ -147,6 +147,7 @@ html {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+    --footer-text: oklch(0.85 0 0);
 }
 
 @layer base {
@@ -157,6 +158,19 @@ html {
     body {
         @apply bg-background text-foreground;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Optimize font loading */
+.font-inter {
+    font-display: swap;
 }
 
 /* Add to your global CSS file */
@@ -191,4 +205,25 @@ html {
 /* Add to your global CSS */
 .animation-delay-2000 {
     animation-delay: 2000ms;
+}
+
+/* Add at the end of index.css */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.loading-gradient {
+    background: linear-gradient(-45deg, #111111, #1a1a1a, #111111, #1a1a1a);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
 }

@@ -46,8 +46,20 @@
   <meta name="theme-color" content="#111111" />
   <meta name="msapplication-TileColor" content="#111111" />
 
-  <!-- Preload critical images -->
-  <link rel="preload" as="image" href="/1.webp" />
+  <!-- Preload critical origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://kxptt4m9j4.ufs.sh" />
+
+  <!-- Preload critical fonts -->
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" />
+
+  <!-- DNS prefetch for API endpoints -->
+  <link rel="dns-prefetch" href="/api" />
+
+  <!-- Preload critical images (first project is high priority) -->
+  <link rel="preload" as="image" href="/1.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="/2.webp" />
   <link rel="preload" as="image" href="/3.webp" />
   <link rel="preload" as="image" href="/4.webp" />

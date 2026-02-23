@@ -1,0 +1,46 @@
+/* src/styles/accessibility.css */
+
+/* Ensure sufficient contrast for all text on dark backgrounds */
+.dark .text-muted-foreground {
+    color: oklch(0.8 0 0) !important;
+    /* Lighter than default */
+}
+
+/* Focus indicators for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid #ef4444 !important;
+    outline-offset: 2px !important;
+    border-radius: 4px;
+}
+
+/* Skip to main content link - hidden until focused */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 9999;
+    padding: 1rem;
+    background: #ef4444;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-to-content:focus {
+    left: 1rem;
+    top: 1rem;
+}
+
+/* Ensure touch targets are at least 44x44px on mobile */
+@media (max-width: 768px) {
+
+    button,
+    a,
+    [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
