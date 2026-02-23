@@ -1,8 +1,9 @@
+// src/components/globe-hero.tsx
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import React, { useRef } from "react";
+import React, { useRef, lazy, Suspense } from "react";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ interface DotGlobeHeroProps {
   children?: React.ReactNode;
 }
 
+// Simplified Globe with fewer segments
 const Globe: React.FC<{
   rotationSpeed: number;
   radius: number;
@@ -22,19 +24,18 @@ const Globe: React.FC<{
   useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += rotationSpeed;
-      groupRef.current.rotation.x += rotationSpeed * 0.3;
-      groupRef.current.rotation.z += rotationSpeed * 0.1;
     }
   });
 
   return (
     <group ref={groupRef}>
       <mesh>
-        <sphereGeometry args={[radius, 64, 64]} />
+        {/* Reduced segments from 64 to 32 for better performance */}
+        <sphereGeometry args={[radius, 32, 32]} />
         <meshBasicMaterial
           color="#ff3333"
           transparent
-          opacity={0.3}
+          opacity={0.2}
           wireframe
         />
       </mesh>
@@ -42,12 +43,7 @@ const Globe: React.FC<{
   );
 };
 
-
-
-const DotGlobeHero = React.forwardRef<
-  HTMLDivElement,
-  DotGlobeHeroProps
->(({
+const DotGlobeHero = React.forwardRef<HTMLDivElement, DotGlobeHeroProps>(({
   rotationSpeed = 0.005,
   globeRadius = 1,
   className,
@@ -63,16 +59,18 @@ const DotGlobeHero = React.forwardRef<
       )}
       {...props}
     >
-      <div className="relative flex flex-col items-center justify-center h-full">
+      <div className="relative flex flex-col items-center justify-center h-full z-10">
         {children}
       </div>
 
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <Canvas>
+        <Canvas
+          dpr={[1, 1.5]} // Limit pixel ratio for performance
+          performance={{ min: 0.5 }}
+          gl={{ powerPreference: "high-performance" }}
+        >
           <PerspectiveCamera makeDefault position={[0, 0, 3]} fov={75} />
           <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-
           <Globe
             rotationSpeed={rotationSpeed}
             radius={globeRadius}
@@ -84,5 +82,4 @@ const DotGlobeHero = React.forwardRef<
 });
 
 DotGlobeHero.displayName = "DotGlobeHero";
-
-export { DotGlobeHero, type DotGlobeHeroProps };
+export { DotGlobeHero };

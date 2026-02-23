@@ -3,6 +3,7 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import tailwindcss from "@tailwindcss/vite"
 import { VitePWA } from "vite-plugin-pwa"
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
   resolve: {
@@ -15,7 +16,7 @@ export default defineConfig({
 
   plugins: [
     react(),
-    tailwindcss(), // Tailwind v4 plugin
+    tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
@@ -27,29 +28,35 @@ export default defineConfig({
         background_color: "#000000",
         display: "standalone",
         icons: [
-          {
-            src: "/pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
+          { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png" },
+          { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png" },
         ],
       },
     }),
-  ],
+    process.env.ANALYZE && visualizer({
+      filename: 'dist/stats.html',
+      open: true,
+      gzipSize: true,
+    }),
+  ].filter(Boolean),
 
   build: {
     sourcemap: false,
     minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'framer-motion'],
+          'react-core': ['react', 'react-dom'],
+          'framer-motion': ['framer-motion'],
+          // Three.js is now only used in globe-hero, so it can be its own chunk
           'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          'ui-icons': ['lucide-react'],
         },
       },
     },
