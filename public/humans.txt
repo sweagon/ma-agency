@@ -1,0 +1,12 @@
+# humans.txt - MA Agency
+
+## TEAM
+Developer: Agon Kadriu
+Site: MA Agency
+Location: London, UK
+
+## THANKS
+Thanks for checking out our site!
+
+## TECHNOLOGY
+React, TypeScript, TailwindCSS, Vite, Vercel, Three.js

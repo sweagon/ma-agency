@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /#projects
+Allow: /#services
+Allow: /#contact
 
 Sitemap: https://ma-webagency.vercel.app/sitemap.xml

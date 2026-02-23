@@ -145,9 +145,6 @@ export default function App() {
 
                             {/* Headline - with working MorphingText */}
                             <div className="space-y-6">
-                                <h1 className="sr-only">
-                                    MA Agency | London-Based Digital Marketing Agency | Design, Development, Marketing
-                                </h1>
                                 <motion.h1
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
