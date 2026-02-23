@@ -19,19 +19,27 @@ const CircularRevealHeading = lazy(() => import("./components/circular-reveal-he
 const serviceItems = [
     {
         text: "STRATEGY",
-        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkceCYjHtyWSduj04chzxgP3pt1Dvo8KfCsHnwk"
+        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkceCYjHtyWSduj04chzxgP3pt1Dvo8KfCsHnwk",
+        width: 400,
+        height: 400
     },
     {
         text: "DESIGN",
-        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcZY3vRlCe5wpMsRmKntGfIu4E6OSxhgzL3kU1"
+        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcZY3vRlCe5wpMsRmKntGfIu4E6OSxhgzL3kU1",
+        width: 200,
+        height: 200
     },
     {
         text: "GROWTH",
-        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcz9VsoNLlt5AKuj9HqWQm3NeDUywcLSxB6Yo1"
+        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcz9VsoNLlt5AKuj9HqWQm3NeDUywcLSxB6Yo1",
+        width: 400,
+        height: 400
     },
     {
         text: "INNOVATION",
-        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcypc1wWQBS4VNPtfqkpIhO7M6XUva5TzWomdZ"
+        image: "https://kxptt4m9j4.ufs.sh/f/9YHhEDeslzkcypc1wWQBS4VNPtfqkpIhO7M6XUva5TzWomdZ",
+        width: 400,
+        height: 400
     }
 ];
 
@@ -402,7 +410,9 @@ export default function App() {
                         >
                             <div className="relative">
                                 <div className="absolute inset-0 bg-red-500/20 rounded-full blur-3xl scale-150" />
-                                <Suspense fallback={<div className="w-64 h-64 bg-gray-200 rounded-full animate-pulse" />}>
+                                <Suspense fallback={
+                                    <div className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-gray-200 rounded-full animate-pulse mx-auto" />
+                                }>
                                     <CircularRevealHeading
                                         items={serviceItems}
                                         centerText={
